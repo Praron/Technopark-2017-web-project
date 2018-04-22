@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+	<title>{% block title_block %}AskRemizov/base{% endblock %}</title>
+	<link href="{% static "bootstrap/css/darkly_bootstrap.css" %}" type="text/css" rel="stylesheet">
+	<script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+	<style type="text/css">
+		.navbar-brand {
+		margin-top: -30px;
+		}
+		.header_questions {
+		padding-left: 15px;
+		display: inline-block;
+		}
+		.header_hot_questions {
+		padding-left: 20px;
+		display: inline-block;
+		}
+		.raiting {
+		margin: 5px 5px 5px 5px;
+		}
+		.question {
+		margin-bottom: 20px;
+		border: 3px solid #000000;
+		border-radius: 4px;
+		overflow-wrap: break-word;
+		}
+		.question_info{
+		text-align: center;
+		}
+		.question_img{
+		margin: 5px 5px 10px 5px;
+		}
+		.navbar_img{
+		width:42px;
+		height:42px;
+		margin-right:10px;
+		}
+		#avatar_navbar{
+		margin:7px 8px 0px 0px;
+		}
+		.popular_tags{
+		display: inline-block;
+		white-space: pre-wrap;
+		}
+		li{
+		list-style-type: none;
+		}
+		ul{
+		padding-left: 0px;
+		margin-left: -10px;
+		}
+		#nav_search {
+		width: 400px;
+		border-radius: 20px;
+		}
+		#right_side {
+		padding-left:50px;
+		}
+		{% block extra_css %}{% endblock %}
+	</style>
+</head>
+<body class="container">
+	
+	{% include 'questions/navbar.html' %}
+
+	<div class="row">
+		<div class="col-sm-9 left_side">
+			<div class="row">
+				{% if show_hot == 0 %}
+				<h1 class="header_questions">New Questions</h1>
+				<a href="{% url 'base' %}?hot=1"><h3 class="header_hot_questions">Hot Questions</h3></a>
+				{% else %}
+				<a href="{% url 'base' %}?"><h3 class="header_questions">New Questions</h3></a>
+				<h1 class="header_hot_questions">Hot Questions</h1>
+				{% endif %}
+			</div>
+			
+			{% for question in questions %}
+				{% include 'questions/question.html' %}
+			{% endfor %}
+
+			{% if questions.has_other_pages %}
+				<ul class="pagination">
+					{% if questions.has_previous %}
+						<li><a href="?{{ get_parameters }}page={{ questions.previous_page_number }}">&laquo;</a></li>
+					{% else %}
+						<li class="disabled"><span>&laquo;</span></li>
+					{% endif %}
+					{% for i in questions.paginator.page_range %}
+						{% if questions.number == i %}
+							<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+						{% else %}
+							<li><a href="?{{ get_parameters }}page={{ i }}">{{ i }}</a></li>
+						{% endif %}
+					{% endfor %}
+					{% if questions.has_next %}
+						<li><a href="?{{ get_parameters }}page={{ questions.next_page_number }}">&raquo;</a></li>
+					{% else %}
+						<li class="disabled"><span>&raquo;</span></li>
+					{% endif %}
+				</ul>
+			{% endif %}
+
+		</div>
+
+		<div class="col-sm-3" id="right_side">
+			{% include 'questions/popular_tags.html' %}
+			{% include 'questions/best_members.html' %}
+		</div>
+	</div>
+</body>
+</html>

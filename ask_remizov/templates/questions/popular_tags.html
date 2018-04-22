@@ -1,0 +1,12 @@
+<div class="row">
+	<h1>Popular Tags</h1>
+</div>
+<div align="left" class="row">
+	{% for tag in popular_tags %}
+		<a href="/question/tag/{{ tag.id }}"><b>
+			<!-- <font size="{{ tag.num_questions }}"> -->
+			{{ tag.text }}
+			<!-- </font> -->
+		</b></a>
+	{% endfor %}
+</div>

@@ -1,0 +1,8 @@
+<div class="row">
+    <h1>Best Members</h1>
+</div>
+<ul class="best_members">
+    {% for member in best_members %}
+        <li><a><b> {{ member.username }} </b></a></li>
+    {% endfor %}
+</ul>

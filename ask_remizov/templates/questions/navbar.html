@@ -1,0 +1,45 @@
+{% load static %}
+<nav class="navbar navbar-default nav">
+        <div class="container-fluid">
+            <div class="navbar-header"">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="/question">
+                    <h1>AskRemizov</h1>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" id="nav_search">
+                    </div>
+                    <a href="{% url 'ask' %}" class="btn btn-success">
+                        Ask!
+                    </a>
+                </form>
+                <div class="navbar-right" id="avatar_navbar">
+                    <div class="navbar-left">
+                        <div class="navbar_img">
+                            <a href="settings.html">
+                            {% if user.is_authenticated %}
+                                <img alt="72x72" src="{{ user.profile.avatar.url }}" class="img-thumbnail">
+                            {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="navbar-right">
+                        {% if user.is_authenticated %}
+                            {{ user.username }}
+                            <br>
+                            <a href="{% url 'settings' %}">Settings</a>
+                            <a href="{% url 'logout' %}?continue={{ request.path }}">Log out</a>
+                        {% else %}
+                            <a href="{% url 'login' %}?continue={{ request.path }}">Log in</a>
+                            <a href="{% url 'signup' %}?continue={{ request.path }}">Sign up</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
+    </nav>

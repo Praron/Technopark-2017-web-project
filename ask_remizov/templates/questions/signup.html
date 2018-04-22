@@ -1,0 +1,159 @@
+{% load static %}
+{% load extra_filters %}
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+	<title>Sign up</title>
+	<link href="{% static "bootstrap/css/darkly_bootstrap.css" %}" type="text/css" rel="stylesheet">
+	<script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+	<style type="text/css">
+		.navbar-brand {
+		margin-top: -30px;
+		}
+		.header{
+		padding-left: 15px;
+		display: inline-block;
+		}
+		.header_second{
+		padding-left: 20px;
+		display: inline-block;
+		}
+		.raiting {
+		margin: 5px 5px 5px 5px;
+		}
+		.question {
+		margin-bottom: 20px;
+		border: 3px solid #000000;
+		border-radius: 4px;
+		}
+		.question_info{
+		text-align: center;
+		}
+		.question_img{
+		margin: 5px 5px 10px 5px;
+		}
+		.navbar_img{
+		width:42px;
+		height:42px;
+		margin-right:10px;
+		}
+		#avatar_navbar{
+		margin:7px 8px 0px 0px;
+		}
+		.popular_tags{
+		display: inline-block;
+		white-space: pre-wrap;
+		}
+		li{
+		list-style-type: none;
+		}
+		ul{
+		padding-left: 0px;
+		margin-left: -10px;
+		}
+		#nav_search {
+		width: 400px;
+		border-radius: 20px;
+		}
+		#btn_raiting {
+		max-height: 20px;
+		}
+		#right_side {
+		padding-left:50px;
+		}
+	</style>
+</head>
+<body class="container">
+	
+	{% include 'questions/navbar.html' %}
+
+	<div class="row">
+		<div class="col-sm-9 left_side">
+			<div class="row">
+				<center>
+					<h1 class="header">Registration</h1>
+				</center>
+			</div>
+
+			<form enctype="multipart/form-data" action="" method="post">
+			{% csrf_token %}
+
+			<div class="row" id=signup_errors>
+				<font color="red">
+					<center>
+						{% for k, error in signup_form.errors.items %}
+							<p><b> {{ error|escape }} </b></p>
+						{% endfor %}
+					</center>
+				</font>
+			</div>
+
+			
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ signup_form.login.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ signup_form.login|add_css:'class=form-control,placeholder=Login' }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ signup_form.email.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ signup_form.email|add_css:'class=form-control,placeholder=Email' }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ signup_form.nickname.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ signup_form.nickname|add_css:'class=form-control,placeholder=Nickname' }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ signup_form.password.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ signup_form.password|add_css:'class=form-control,placeholder=Password' }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ signup_form.password_again.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ signup_form.password_again|add_css:'class=form-control,placeholder=Password' }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ signup_form.avatar.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ signup_form.avatar|add_css:'class=form-control-file' }}
+				</div>
+			</div>
+
+			<center><button type="submit" class="btn btn-primary">Sign up</button></center>
+
+			</form>
+
+		</div>
+		<div class="col-sm-3" id="right_side">
+			{% include 'questions/popular_tags.html' %}
+			{% include 'questions/best_members.html' %}
+		</div>
+	</div>
+</body>
+</html>
+

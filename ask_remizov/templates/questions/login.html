@@ -1,0 +1,123 @@
+
+
+{% load static %}
+{% load extra_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login</title>
+	<link href="{% static "bootstrap/css/darkly_bootstrap.css" %}" type="text/css" rel="stylesheet">
+	<script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+	<style type="text/css">
+		.navbar-brand {
+		margin-top: -30px;
+		}
+		.header{
+		padding-left: 15px;
+		display: inline-block;
+		}
+		.header_second{
+		padding-left: 20px;
+		display: inline-block;
+		}
+		.raiting {
+		margin: 5px 5px 5px 5px;
+		}
+		.question {
+		margin-bottom: 20px;
+		border: 3px solid #000000;
+		border-radius: 4px;
+		}
+		.question_info{
+		text-align: center;
+		}
+		.question_img{
+		margin: 5px 5px 10px 5px;
+		}
+		.navbar_img{
+		width:42px;
+		height:42px;
+		margin-right:10px;
+		}
+		#avatar_navbar{
+		margin:7px 8px 0px 0px;
+		}
+		.popular_tags{
+		display: inline-block;
+		white-space: pre-wrap;
+		}
+		li{
+		list-style-type: none;
+		}
+		ul{
+		padding-left: 0px;
+		margin-left: -10px;
+		}
+		#nav_search {
+		width: 400px;
+		border-radius: 20px;
+		}
+		#btn_raiting {
+		max-height: 20px;
+		}
+		#right_side {
+		padding-left:50px;
+		}
+	</style>
+</head>
+<body class="container">
+
+	{% include 'questions/navbar.html' %}
+
+	<div class="row">
+		<div class="col-sm-9 left_side">
+			<div class="row">
+				<center>
+					<h1 class="header">Log In</h1>
+				</center>
+			</div>
+
+			<form action="" method="post">
+			{% csrf_token %}
+
+			<div class="row" id=wrong_pass>
+				<font color="red">
+					<center>
+						{% for k, error in login_form.errors.items %}
+							<p><b> {{ error|escape }} </b></p>
+						{% endfor %}
+					</center>
+				</font>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ login_form.login.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ login_form.login|add_css:'class=form-control,placeholder=Your login' }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-2 col-form-label">
+					{{ login_form.password.label_tag }}
+				</div>
+				<div class="col-sm-10">
+					{{ login_form.password|add_css:'class=form-control,placeholder=Your password' }}
+				</div>
+			</div>
+
+			<center><button type="submit" class="btn btn-primary">Login!</button></center>
+
+			</form>
+			
+		</div>
+		<div class="col-sm-3" id="right_side">
+			{% include 'questions/popular_tags.html' %}
+			{% include 'questions/best_members.html' %}
+		</div>
+	</div>
+</body>
+</html>
+

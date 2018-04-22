@@ -25,7 +25,7 @@ SECRET_KEY = '_6up0213&!j0ti_crgz6+*0#iwqyagtb-z#r3cusfg^em)^n)*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [u'backend', u'localhost']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'questions',
 ]
 
 MIDDLEWARE = [
@@ -49,12 +50,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
+
+
 ROOT_URLCONF = 'ask_remizov.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,6 +88,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': os.path.join(BASE_DIR, 'db.mariadb'),
+        # 'USER':'sleepless',
+        # 'PASSWORD':'root',
+        # 'HOST':'localhost',
+        # 'PORT':'',
     }
 }
 
@@ -104,7 +121,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+# LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -119,10 +137,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_URL = '/home/sleepless/Programming/technopark/web/django_venv/ask_remizov'
+STATIC_ROOT = '/var/www/example.com/static/'
+# STATIC_ROOT = '/home/sleepless/Programming/technopark/web/django_venv/ask_remizov/static/'
 
 STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static'),
+    # '/home/sleepless/Programming/technopark/web/django_venv/ask_remizov',
+    os.path.join(BASE_DIR, 'static'),
 )
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = '/uploads/'
